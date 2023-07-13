@@ -8,8 +8,8 @@ from PySide6.QtWidgets import QApplication, QGridLayout, QPushButton, QWidget
 app = QApplication(sys.argv)
 
 # criação dos botões
-botao = QPushButton('Texto do botão')
-botao.setStyleSheet('font-size: 80px;')
+botao1 = QPushButton('Texto do botão')
+botao1.setStyleSheet('font-size: 80px;')
 
 botao2 = QPushButton('Botão 2')
 botao2.setStyleSheet('font-size: 40px;')
@@ -27,7 +27,7 @@ layout = QGridLayout()
 central_widget.setLayout(layout)
 
 # adicionando os botões no layout
-layout.addWidget(botao, 1, 1, 1, 1)
+layout.addWidget(botao1, 1, 1, 1, 1)
 layout.addWidget(botao2, 1, 2, 1, 1)
 layout.addWidget(botao3, 3, 1, 1, 2)
 
