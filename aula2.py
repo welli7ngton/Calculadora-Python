@@ -11,6 +11,7 @@
 
 import sys
 import datetime
+from PySide6.QtCore import Slot
 from PySide6.QtWidgets import (QApplication,
                                QGridLayout,
                                QPushButton,
@@ -33,8 +34,21 @@ botao3 = QPushButton('Botão 3')
 botao3.setStyleSheet('font-size: 40px;')
 
 
+@Slot()
 def exemplo_slot():
     print(1234567810)
+
+
+@Slot()
+def outro_slot(checked):
+    print("está marcado?", checked)
+
+
+@Slot()
+def terceiro_slot(acao):
+    def interna():
+        outro_slot(acao.isChecked())
+    return interna
 
 
 # criando widget central
@@ -56,6 +70,13 @@ menu = window.menuBar()
 primeiro_menu = menu.addMenu("Menu")
 primeira_acao = primeiro_menu.addAction("Primeira Ação")
 primeira_acao.triggered.connect(exemplo_slot)
+
+segunda_acao = primeiro_menu.addAction("Segunda acao")
+segunda_acao.setCheckable(True)
+segunda_acao.toggled.connect(outro_slot)
+# segunda_acao.hovered.connect(terceiro_slot(segunda_acao))
+
+botao1.clicked.connect(terceiro_slot(segunda_acao))
 
 # status bar
 status_bar = window.statusBar()
