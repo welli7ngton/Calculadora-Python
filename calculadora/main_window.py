@@ -9,10 +9,10 @@ class JanelaPrincipal(QMainWindow):
         self.central_widget = QWidget()
 
         # creiando o layout do widget central(forma da janela central)
-        self.v_layout = QVBoxLayout()
+        self.vLayout = QVBoxLayout()
 
         # setando o layout do widget central(forma da janela central)
-        self.central_widget.setLayout(self.v_layout)
+        self.central_widget.setLayout(self.vLayout)
 
         # setando o widget central no topo da hierarquia de widgets
         self.setCentralWidget(self.central_widget)
