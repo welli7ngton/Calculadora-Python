@@ -25,4 +25,3 @@ class Display(QLineEdit):
         self.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.setTextMargins(*[MARGEM for _ in range(4)])
         self.setMinimumWidth(LARGURA_MINIMA)
-

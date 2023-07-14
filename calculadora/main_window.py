@@ -19,6 +19,10 @@ class JanelaPrincipal(QMainWindow):
 
         self.setWindowTitle("Calculadora")
 
-        # tamanho da janela
+    def addToVLayout(self, widget: QWidget):
+        self.vLayout.addWidget(widget)
+
+    def adjustFixedSize(self):
+        # Última coisa a ser feita
         self.adjustSize()
         self.setFixedSize(self.width(), self.height())
