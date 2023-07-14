@@ -1,5 +1,5 @@
-# Curso sobre interface gráfica com Python
+# Calcuadora 100% em Python
 
 ## PySide6 e QT6
 
-Repositório para adicionar aulas, exercícios e projetos do curso.
+Repositório para pro projeto da calculadora com interface gráfica
