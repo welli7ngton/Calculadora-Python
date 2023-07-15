@@ -5,13 +5,13 @@ FILES_DIR = ROOT_DIR / "files"
 CAMINHO_ICONE = FILES_DIR / "white-calculator-64.png"
 
 # tamanhos
-BIG = 40
-MEDIUM = 24
-SMALL = 18
+BIG_FONT = 40
+MEDIUM_FONT = 24
+SMALL_FONT = 18
 MARGEM = 15
 LARGURA_MINIMA = 400
 
-# cores
+# Cores
 # mais clara
 COR_PRIMARIA = '#1e81b0'
 # mediana
