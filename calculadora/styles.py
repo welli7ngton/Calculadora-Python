@@ -7,15 +7,15 @@
 import qdarktheme
 from variaveis import COR_PRIMARIA, COR_SECUNDARIA, COR_TERCIARIA
 qss = f"""
-    PushButton[cssClass="specialButton"] {{
+    QPushButton[cssClass="specialButton"] {{
         color: #fff;
         background: {COR_PRIMARIA};
     }}
-    PushButton[cssClass="specialButton"]:hover {{
+    QPushButton[cssClass="specialButton"]:hover {{
         color: #fff;
         background: {COR_SECUNDARIA};
     }}
-    PushButton[cssClass="specialButton"]:pressed {{
+    QPushButton[cssClass="specialButton"]:pressed {{
         color: #fff;
         background: {COR_TERCIARIA};
     }}
