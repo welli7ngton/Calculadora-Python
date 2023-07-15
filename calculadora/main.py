@@ -6,6 +6,8 @@ from main_window import JanelaPrincipal
 from display import Display, cria_infor_display
 from variaveis import CAMINHO_ICONE
 from styles import addTema
+from buttons import GridBotoes
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -13,10 +15,13 @@ if __name__ == "__main__":
     janela = JanelaPrincipal()
 
     info = cria_infor_display()
-    janela.addToVLayout(info)
+    janela.addToWidgetVLayout(info)
     display = Display()
     # display.setPlaceholderText("0")
-    janela.addToVLayout(display)
+    janela.addToWidgetVLayout(display)
+
+    grid_botoes = GridBotoes()
+    janela.vLayout.addLayout(grid_botoes)
 
     icone = QIcon(str(CAMINHO_ICONE))
     janela.setWindowIcon(icone)
