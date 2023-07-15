@@ -17,7 +17,7 @@ if __name__ == "__main__":
     info = cria_infor_display()
     janela.addToWidgetVLayout(info)
     display = Display()
-    # display.setPlaceholderText("0")
+    display.setPlaceholderText("0")
     janela.addToWidgetVLayout(display)
 
     grid_botoes = GridBotoes()

@@ -2,6 +2,7 @@
 
 Este é um projeto de uma calculadora desenvolvida em Python utilizando a biblioteca PySide6 e o framework QT6. A calculadora fornece uma interface gráfica intuitiva e funcional para realizar operações matemáticas básicas.
 
+![Calculadora](calculadora/files/picture.png)
 
 ## Recursos
 
