@@ -15,12 +15,12 @@ if __name__ == "__main__":
     janela = JanelaPrincipal()
 
     info = cria_infor_display()
-    janela.addToWidgetVLayout(info)
     display = Display()
     display.setPlaceholderText("0")
+    janela.addToWidgetVLayout(info)
     janela.addToWidgetVLayout(display)
 
-    grid_botoes = GridBotoes()
+    grid_botoes = GridBotoes(display, info)
     janela.vLayout.addLayout(grid_botoes)
 
     icone = QIcon(str(CAMINHO_ICONE))
