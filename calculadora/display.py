@@ -7,7 +7,7 @@ from variaveis import BIG_FONT, MARGEM, LARGURA_MINIMA
 def cria_infor_display():
     # criando widget
     infor_display = Display()
-    # setandoe estilos do display
+    # setando estilos do display
     infor_display.setStyleSheet("font-size: 15px;")
     infor_display.setMinimumHeight(5)
     infor_display.setTextMargins(7, 2, 7, 2)
