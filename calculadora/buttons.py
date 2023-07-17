@@ -37,8 +37,10 @@ class GridBotoes(QGridLayout):
         ]
         self.display = dp
         self.info = info
-        self._equacao = ""
-
+        self._equacao = "Histórico"
+        self.esquerda = None
+        self.direita = None
+        self.operador = None
         self.make_grid()
 
     @property
@@ -69,8 +71,27 @@ class GridBotoes(QGridLayout):
         texto = botao.text()
 
         if texto == "C":
-            slot = self.fazSlotBotao(self.display.clear)
-            self._connectButtonClicked(botao, slot)
+            # jeito 1
+            # slot = self.fazSlotBotao(self.display.clear)
+            # self._connectButtonClicked(botao, slot)
+            # slot2 = self.fazSlotBotao(self.info.clear)
+            # self._connectButtonClicked(botao, slot2)
+
+            # jeito 2
+            # botao.clicked.connect(self.display.clear)
+            # botao.clicked.connect(self.info.clear)
+
+            # funcao
+            self._connectButtonClicked(botao, self.limpaDisplay)
+
+        if texto in "+-*/":
+            self._connectButtonClicked(
+                botao,
+                self.fazSlotBotao(self.operadorClicado, botao)
+                )
+
+        if texto in "=":
+            self._connectButtonClicked(botao, self.igual)
 
     def fazSlotBotao(self, func, *args, **kwargs):
         def _slot():
@@ -85,3 +106,38 @@ class GridBotoes(QGridLayout):
             return
 
         self.display.insert(texto_botao)
+
+    def operadorClicado(self, botao):
+        texto_botao = botao.text()
+        texto_display = self.display.text()
+        self.display.clear()
+        if not isValidNumber(texto_display) and self.esquerda is None:
+            print("nao há nada para fazer")
+            return
+
+        if self.esquerda is None:
+            self.esquerda = float(texto_display)
+
+        self.operador = texto_botao
+
+        self.equacao = f"{self.esquerda} {self.operador} ??"
+
+    def limpaDisplay(self):
+        self.equacao = "Histórico"
+        self.esquerda = None
+        self.direita = None
+        self.operador = None
+        self.display.clear()
+
+    def igual(self):
+        self.direita = float(self.display.text())
+        self.info.setText(f"{self.esquerda} {self.operador} {self.direita}")
+
+        if self.operador == "+":
+            self.display.setText(f"{self.esquerda+self.direita}")
+        if self.operador == "-":
+            self.display.setText(f"{self.esquerda-self.direita}")
+        if self.operador == "*":
+            self.display.setText(f"{self.esquerda*self.direita}")
+        if self.operador == "/":
+            self.display.setText(f"{self.esquerda//self.direita}")
