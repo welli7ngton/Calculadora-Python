@@ -87,7 +87,7 @@ class GridBotoes(QGridLayout):
             # funcao
             self._connectButtonClicked(botao, self.limpaDisplay)
 
-        if texto in "DEL":
+        if texto == "DEL":
             self._connectButtonClicked(botao, self.display.backspace)
 
         if texto in "+-*/^":
@@ -96,7 +96,7 @@ class GridBotoes(QGridLayout):
                 self.fazSlotBotao(self.operadorClicado, botao)
                 )
 
-        if texto in "=":
+        if texto == "=":
             self._connectButtonClicked(botao, self.igual)
 
     def fazSlotBotao(self, func, *args, **kwargs):
@@ -138,7 +138,6 @@ class GridBotoes(QGridLayout):
 
     def igual(self):
         texto_display = self.display.text()
-
         if not isValidNumber(texto_display):
             self._mostraErro("Você não digitou nada.")
             return
@@ -153,6 +152,10 @@ class GridBotoes(QGridLayout):
             resultado = eval(self.equacao)
             self.equacao = f"{self.equacao} = {resultado}"
             self.esquerda = resultado
+        except SyntaxError:
+            self.equacao = ""
+            self.display.clear()
+            resultado = ""
         except ZeroDivisionError:
             self.equacao = "error"
             self._mostraErro("Erro: Divisão por zero.")
@@ -161,6 +164,7 @@ class GridBotoes(QGridLayout):
             self.equacao = "error"
             self._mostraErro("Erro: Número muito grande.")
             self.esquerda = None
+
         self.display.clear()
         self.direita = None
 
