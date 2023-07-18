@@ -1,4 +1,4 @@
-from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QMainWindow, QVBoxLayout, QWidget, QMessageBox)
 
 
 class JanelaPrincipal(QMainWindow):
@@ -26,3 +26,6 @@ class JanelaPrincipal(QMainWindow):
         # Última coisa a ser feita
         self.adjustSize()
         self.setFixedSize(self.width(), self.height())
+
+    def fazMsgBox(self):
+        return QMessageBox(self)
