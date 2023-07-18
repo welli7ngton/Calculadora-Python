@@ -20,7 +20,7 @@ if __name__ == "__main__":
     janela.addToWidgetVLayout(info)
     janela.addToWidgetVLayout(display)
 
-    grid_botoes = GridBotoes(display, info)
+    grid_botoes = GridBotoes(display, info, janela)
     janela.vLayout.addLayout(grid_botoes)
 
     icone = QIcon(str(CAMINHO_ICONE))
