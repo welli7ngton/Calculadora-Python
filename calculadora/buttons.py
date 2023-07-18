@@ -5,6 +5,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from display import Display
+    from main_window import JanelaPrincipal
 
 
 class Botao(QPushButton):
@@ -25,6 +26,7 @@ class GridBotoes(QGridLayout):
     def __init__(self,
                  dp: 'Display',
                  info: 'Display',
+                 window: 'JanelaPrincipal',
                  *args,
                  **kwargs) -> None:
         super().__init__(*args, **kwargs)
@@ -35,6 +37,7 @@ class GridBotoes(QGridLayout):
             ["1", "2", "3", "+"],
             ["", "0", ".", "="]
         ]
+        self.window = window
         self.display = dp
         self.info = info
         self._equacao = "Histórico"
@@ -84,7 +87,10 @@ class GridBotoes(QGridLayout):
             # funcao
             self._connectButtonClicked(botao, self.limpaDisplay)
 
-        if texto in "+-*/":
+        if texto in "DEL":
+            self._connectButtonClicked(botao, self.display.backspace)
+
+        if texto in "+-*/^":
             self._connectButtonClicked(
                 botao,
                 self.fazSlotBotao(self.operadorClicado, botao)
@@ -111,8 +117,9 @@ class GridBotoes(QGridLayout):
         texto_botao = botao.text()
         texto_display = self.display.text()
         self.display.clear()
+
         if not isValidNumber(texto_display) and self.esquerda is None:
-            print("nao há nada para fazer")
+            self._mostraErro("Você não digitou nada.")
             return
 
         if self.esquerda is None:
@@ -130,14 +137,35 @@ class GridBotoes(QGridLayout):
         self.display.clear()
 
     def igual(self):
-        self.direita = float(self.display.text())
-        self.info.setText(f"{self.esquerda} {self.operador} {self.direita}")
+        texto_display = self.display.text()
 
-        if self.operador == "+":
-            self.display.setText(f"{self.esquerda+self.direita}")
-        if self.operador == "-":
-            self.display.setText(f"{self.esquerda-self.direita}")
-        if self.operador == "*":
-            self.display.setText(f"{self.esquerda*self.direita}")
-        if self.operador == "/":
-            self.display.setText(f"{self.esquerda//self.direita}")
+        if not isValidNumber(texto_display):
+            self._mostraErro("Você não digitou nada.")
+            return
+
+        self.direita = float(self.display.text())
+        self.equacao = f"{self.esquerda} {self.operador} {self.direita}"
+
+        if "^" in self.equacao:
+            self.equacao = self.equacao.replace("^", "**")
+
+        try:
+            resultado = eval(self.equacao)
+            self.equacao = f"{self.equacao} = {resultado}"
+            self.esquerda = resultado
+        except ZeroDivisionError:
+            self.equacao = "error"
+            self._mostraErro("Erro: Divisão por zero.")
+            self.esquerda = None
+        except OverflowError:
+            self.equacao = "error"
+            self._mostraErro("Erro: Número muito grande.")
+            self.esquerda = None
+        self.display.clear()
+        self.direita = None
+
+    def _mostraErro(self, texto):
+        msgBox = self.window.fazMsgBox()
+        msgBox.setText(texto)
+        msgBox.setIcon(msgBox.Icon.Warning)
+        msgBox.exec()
