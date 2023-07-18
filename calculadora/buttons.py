@@ -40,7 +40,7 @@ class GridBotoes(QGridLayout):
         self.window = window
         self.display = dp
         self.info = info
-        self._equacao = "Histórico"
+        self._equacao = ""
         self.esquerda = None
         self.direita = None
         self.operador = None
@@ -130,7 +130,7 @@ class GridBotoes(QGridLayout):
         self.equacao = f"{self.esquerda} {self.operador} ??"
 
     def limpaDisplay(self):
-        self.equacao = "Histórico"
+        self.equacao = ""
         self.esquerda = None
         self.direita = None
         self.operador = None
