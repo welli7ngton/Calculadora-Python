@@ -56,6 +56,12 @@ class GridBotoes(QGridLayout):
         self.info.setText(valor)
 
     def make_grid(self):
+        self.display.igual.connect(lambda: print(123))
+        self.display.backspc.connect(self.display.backspace)
+        self.display.esc_p.connect(lambda: self.limpaDisplay())
+        self.display.numeros.connect(lambda texto: print(texto))
+        self.display.operadores.connect(lambda texto: print(texto))
+
         for i, linha in enumerate(self._grid_mask):
             for j, texto_botao in enumerate(linha):
                 b = Botao(texto_botao)
