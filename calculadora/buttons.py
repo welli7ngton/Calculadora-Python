@@ -35,7 +35,7 @@ class GridBotoes(QGridLayout):
             ["7", "8", "9", "*"],
             ["4", "5", "6", "-"],
             ["1", "2", "3", "+"],
-            ["", "0", ".", "="]
+            ["N", "0", ".", "="]
         ]
         self.window = window
         self.display = dp
@@ -96,6 +96,9 @@ class GridBotoes(QGridLayout):
         if texto == "DEL":
             self._connectButtonClicked(botao, self.display.backspace)
 
+        if texto == "N":
+            self._connectButtonClicked(botao, self.positivoNegativo)
+
         if texto in "+-*/^":
             self._connectButtonClicked(
                 botao,
@@ -117,6 +120,7 @@ class GridBotoes(QGridLayout):
             return
 
         self.display.insert(texto)
+        self.display.setFocus()
 
     def operadorClicado(self, texto: str):
 
@@ -134,17 +138,26 @@ class GridBotoes(QGridLayout):
 
         self.equacao = f"{self.esquerda} {self.operador} ??"
 
+    def positivoNegativo(self):
+        texto_display = self.display.text()
+        if not isValidNumber(texto_display):
+            return
+        numero = float(texto_display) * -1
+        self.display.setText(str(numero))
+        self.display.setFocus()
+
     def limpaDisplay(self):
         self.equacao = ""
         self.esquerda = None
         self.direita = None
         self.operador = None
         self.display.clear()
+        self.display.setFocus()
 
     def igual(self):
         texto_display = self.display.text()
-        if not isValidNumber(texto_display):
-            self._mostraErro("Você não digitou nada.")
+        if not isValidNumber(texto_display) or self.esquerda is None:
+            self._mostraErro("Você não digitou nada para realizar a equação.")
             return
 
         self.direita = float(self.display.text())
@@ -172,6 +185,7 @@ class GridBotoes(QGridLayout):
 
         self.display.clear()
         self.direita = None
+        self.display.setFocus()
 
     def _mostraErro(self, texto):
         msgBox = self.window.fazMsgBox()
