@@ -56,11 +56,11 @@ class GridBotoes(QGridLayout):
         self.info.setText(valor)
 
     def make_grid(self):
-        self.display.igual.connect(lambda: print(123))
+        self.display.igual.connect(self.igual)
         self.display.backspc.connect(self.display.backspace)
-        self.display.esc_p.connect(lambda: self.limpaDisplay())
-        self.display.numeros.connect(lambda texto: print(texto))
-        self.display.operadores.connect(lambda texto: print(texto))
+        self.display.esc_p.connect(self.limpaDisplay)
+        self.display.numeros.connect(self._addTextoDisplay)
+        self.display.operadores.connect(self.operadorClicado)
 
         for i, linha in enumerate(self._grid_mask):
             for j, texto_botao in enumerate(linha):
@@ -70,7 +70,7 @@ class GridBotoes(QGridLayout):
                     b.setProperty("cssClass", "specialButton")
                     self._configBotaoEspecial(b)
                 self.addWidget(b, i, j)
-                slot = self.fazSlotBotao(self._addTextoDisplay, b)
+                slot = self.fazSlotBotao(self._addTextoDisplay, b.text())
                 self._connectButtonClicked(b, slot)
 
     def _connectButtonClicked(self, botao, slot):
@@ -99,7 +99,7 @@ class GridBotoes(QGridLayout):
         if texto in "+-*/^":
             self._connectButtonClicked(
                 botao,
-                self.fazSlotBotao(self.operadorClicado, botao)
+                self.fazSlotBotao(self.operadorClicado, texto)
                 )
 
         if texto == "=":
@@ -110,17 +110,16 @@ class GridBotoes(QGridLayout):
             func(*args, **kwargs)
         return _slot
 
-    def _addTextoDisplay(self, b):
-        texto_botao = b.text()
-        novoValorDisplay = self.display.text() + texto_botao
+    def _addTextoDisplay(self, texto: str):
+        novoValorDisplay = self.display.text() + texto
 
         if not isValidNumber(novoValorDisplay):
             return
 
-        self.display.insert(texto_botao)
+        self.display.insert(texto)
 
-    def operadorClicado(self, botao):
-        texto_botao = botao.text()
+    def operadorClicado(self, texto: str):
+
         texto_display = self.display.text()
         self.display.clear()
 
@@ -131,7 +130,7 @@ class GridBotoes(QGridLayout):
         if self.esquerda is None:
             self.esquerda = float(texto_display)
 
-        self.operador = texto_botao
+        self.operador = texto
 
         self.equacao = f"{self.esquerda} {self.operador} ??"
 

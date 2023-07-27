@@ -38,7 +38,6 @@ class Display(QLineEdit):
         nome_tecla = evento.text().strip()
 
         if tecla in [Qt.Key.Key_Enter, Qt.Key.Key_Return, Qt.Key.Key_Equal]:
-            print("enter pressionado, sinal emitido.")
             self.igual.emit()
             return evento.ignore()
 
