@@ -7,8 +7,7 @@ def isNumOrDot(string: str):
     return bool(NUM_OR_DOT_REGEX.search(string))
 
 
-def isValidNumber(string: str):
-    valido = False
+def isValidNumber(string: str, valido=False):
     try:
         float(string)
         valido = True
